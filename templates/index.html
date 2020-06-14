@@ -62,11 +62,11 @@
        <div class="row">
          <div class="col confirmed">
            <h1>Confirmed</h1>
-           <h2>{{data[5]}}</h2>
+           <h2>{{data[5]+data[6]+data[7]}}</h2>
          </div>
          <div class="col active">
            <h1>Active Cases</h1>
-           <h2>{{data[5]-data[6]-data[7]}}</h2>
+           <h2>{{data[5]}}</h2>
          </div>
          <div class="col cured">
            <h1>Cured</h1>
@@ -83,7 +83,7 @@
     <section id="graphs">
 
       <div id="graph">
-
+        <p>Select states to visualize the data.</p>
 
       </div>
       <script type="text/javascript">
@@ -148,7 +148,7 @@
     </button>
     <div class="dropdown-menu">
       {% for i in range(data[0]|length): %}
-      <button class="dropdown-item" href="#" onclick="myNewFunction({'nm':'{{data[1][i]}}','active':{{data[2][i]-data[3][i]-data[4][i]}},'cured':{{data[3][i]}},'dead':{{data[4][i]}}});">{{data[1][i]}}</button>
+      <button class="dropdown-item" href="#" onclick="myNewFunction({'nm':'{{data[1][i]}}','active':{{data[2][i]}},'cured':{{data[3][i]}},'dead':{{data[4][i]}}});">{{data[1][i]}}</button>
       {%endfor%}
   </div>
     </section>
@@ -170,7 +170,7 @@
          <tr>
            <td>{{data[0][i]}}</td>
            <td>{{data[1][i]}}</td>
-           <td>{{data[2][i]-data[3][i]}}</td>
+           <td>{{data[2][i]}}</td>
            <td>{{data[3][i]}}</td>
            <td>{{data[4][i]}}</td>
          </tr>

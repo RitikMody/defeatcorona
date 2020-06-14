@@ -10,6 +10,9 @@ from matplotlib.collections import PatchCollection
 from matplotlib.colors import Normalize
 import matplotlib.cm
 import pandas as pd
+import bs4 as bs
+import urllib.request
+import pandas as pd
 def scrape(url):
     list=[[],[],[],[],[]]
     l=[]
@@ -19,17 +22,20 @@ def scrape(url):
     sauce =str(k)
     soup=bs.BeautifulSoup(sauce,features='lxml')
     k=soup.find_all('tr')
+    c=0
     for i in k:
         l=[]
         sauce =str(i)
         soup=bs.BeautifulSoup(sauce,features='lxml')
         k1=soup.find_all('td')
-        if len(k1)==5:
+        if len(k1)==6 and c<=34:
+            c=c+1
             for n in range(5):
                 l.append(k1[n].text)
             for p in range(5):
                 list[p].append(l[p])
     return list
+
 a=scrape('https://www.mohfw.gov.in/')
 
 def convert(x):
@@ -51,8 +57,8 @@ a[3]=list(data)
 data=map(convert,a[4])
 a[4]=list(data)
 data=pd.DataFrame({'area':a[1],'count':a[2],'cured':a[3],'deaths':a[4]})
-data.loc['area',0]='Andaman & Nicobar Island'
-data.loc['area',7]='NCT of Delhi'
+data.loc[0,'area']='Andaman & Nicobar Island'
+data.loc[8,'area']='NCT of Delhi'
 
 
 
