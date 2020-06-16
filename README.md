@@ -12,11 +12,8 @@ There are 3 types of maps shown in this dashboard :
  - Active cases
  - Cured 
  - Deaths 
- <br>
----
-  <img src="./demo/maps.gif" width="90%"/>
---- 
- <br>
+<center>  <img src="./demo/maps.gif" width="90%"/></center>
+
 ## Graphs
 [![](https://img.shields.io/badge/Made_with-chart.js-red?style=for-the-badge)](https://www.chartjs.org/)
 
