@@ -1,5 +1,6 @@
 # \#defeatCorona
-[![](https://img.shields.io/badge/Made_with-Flask-green?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/1.1.x/) [![](https://img.shields.io/badge/IDE-Atom-yellow?style=for-the-badge&logo=atom)](https://atom.io/)
+[![](https://img.shields.io/badge/Made_with-Flask-green?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/1.1.x/)
+[![](https://img.shields.io/badge/IDE-Atom-yellow?style=for-the-badge&logo=atom)](https://atom.io/)
 
 It is a simple dashboard created to visualize the novel **Corona** cases in India.
 
