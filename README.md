@@ -18,4 +18,4 @@ vid
 In the graphs section , the user is prompted to chose the states to view the graphs : 
 vid
 ## Data
-All the data used and displayed in the website was scraped from the website of [Ministry of Health and Family Welfare](https://www.mohfw.gov.in/).
+All the data used and displayed in the website was scraped from the website of **[Ministry of Health and Family Welfare](https://www.mohfw.gov.in/)**.
