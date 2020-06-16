@@ -13,7 +13,11 @@ There are 3 types of maps shown in this dashboard :
  - Cured 
  - Deaths 
  <br>
-<img src="./demo/maps.gif" width="90%">
+ <center>
+  <img src="./demo/maps.gif" width="90%"/>
+ <center/>
+ 
+ <br>
 ## Graphs
 [![](https://img.shields.io/badge/Made_with-chart.js-red?style=for-the-badge)](https://www.chartjs.org/)
 
