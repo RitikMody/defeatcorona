@@ -1,11 +1,11 @@
 # \#defeatCorona
 [![](https://img.shields.io/badge/Made_with-Flask-green?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/1.1.x/)
-[![](https://img.shields.io/badge/IDE-Atom-yellow?style=for-the-badge&logo=atom)](https://atom.io/)
+[![](https://img.shields.io/badge/IDE-Visual_Studio_Code-blue?style=for-the-badge&logo=visual-studio-code)](https://code.visualstudio.com/  "Visual Studio Code")
 
 It is a simple dashboard created to visualize the novel **Corona** cases in India.
 
 ## Maps
-[![](https://img.shields.io/badge/Made_with-basemap-blue?style=for-the-badge)](https://matplotlib.org/basemap/)
+[![](https://img.shields.io/badge/Made_with-basemap-yellow?style=for-the-badge)](https://matplotlib.org/basemap/)
 
 There are 3 types of maps shown in this dashboard :
 
