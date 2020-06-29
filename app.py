@@ -39,93 +39,90 @@ def convert1(x):
         return x[:-1]
     return x
 
-a=[]
-def run():
-    global a
-    a=scrape('https://www.mohfw.gov.in/')
+a=scrape('https://www.mohfw.gov.in/')
 
-    data=map(convert1,a[1])
-    a[1]=list(data)
-    data1=map(convert,a[2])
+data=map(convert1,a[1])
+a[1]=list(data)
+data1=map(convert,a[2])
 
-    a[2]=list(data1)
-    data=map(convert,a[3])
-    a[3]=list(data)
-    data=map(convert,a[4])
-    a[4]=list(data)
-    data=pd.DataFrame({'area':a[1],'count':a[2],'cured':a[3],'deaths':a[4]})
-    data.loc[0,'area']='Andaman & Nicobar Island'
-    data.loc[8,'area']='NCT of Delhi'
+a[2]=list(data1)
+data=map(convert,a[3])
+a[3]=list(data)
+data=map(convert,a[4])
+a[4]=list(data)
+data=pd.DataFrame({'area':a[1],'count':a[2],'cured':a[3],'deaths':a[4]})
+data.loc[0,'area']='Andaman & Nicobar Island'
+data.loc[8,'area']='NCT of Delhi'
 
-    fp = "Igismap\\Indian_States.shp"
-    map_df = gpd.read_file(fp)
-    merged = map_df.set_index('st_nm').join(data.set_index('area'))
-    merged.head()
-    merged.fillna(0,inplace=True)
+fp = "Igismap\\Indian_States.shp"
+map_df = gpd.read_file(fp)
+merged = map_df.set_index('st_nm').join(data.set_index('area'))
+merged.head()
+merged.fillna(0,inplace=True)
 
-    fig, ax = plt.subplots(figsize=(10,9))
-    plt.style.use("dark_background")
+fig, ax = plt.subplots(figsize=(10,9))
+plt.style.use("dark_background")
 
-    ax.axis('off')
+ax.axis('off')
 
-    merged.plot(column='cured', cmap='Greens', linewidth=0.8, ax=ax, edgecolor='0.8')
-    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['cured'].max()), cmap='Greens')
+merged.plot(column='cured', cmap='Greens', linewidth=0.8, ax=ax, edgecolor='0.8')
+mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['cured'].max()), cmap='Greens')
 
-    mapper.set_array(data['cured'])
-    cbar=plt.colorbar(mapper)
-    cbar.ax.set_title('Cured/Discharged/Migrated',color='white')
-    plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map1.png',bbox_inches='tight')
+mapper.set_array(data['cured'])
+cbar=plt.colorbar(mapper)
+cbar.ax.set_title('Cured/Discharged/Migrated',color='white')
+plt.rcParams['savefig.facecolor']='#343a40'
+plt.savefig('static\\map1.png',bbox_inches='tight')
 
 
 
 
-    fig, ax = plt.subplots(figsize=(10,9))
-    plt.style.use("dark_background")
+fig, ax = plt.subplots(figsize=(10,9))
+plt.style.use("dark_background")
 
-    ax.axis('off')
+ax.axis('off')
 
-    merged.plot(column='deaths', cmap='YlOrRd', linewidth=0.8, ax=ax, edgecolor='0.8')
-    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['deaths'].max()), cmap='YlOrRd')
+merged.plot(column='deaths', cmap='YlOrRd', linewidth=0.8, ax=ax, edgecolor='0.8')
+mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['deaths'].max()), cmap='YlOrRd')
 
-    mapper.set_array(data['deaths'])
-    cbar=plt.colorbar(mapper)
-    cbar.ax.set_title('Deaths',color='white')
-    plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map2.png',bbox_inches='tight')
-
-
-
-
-    fig, ax = plt.subplots(figsize=(10, 9))
-    plt.style.use("dark_background")
-
-    ax.axis('off')
-
-    merged.plot(column='count', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8')
-    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['count'].max()), cmap='Blues')
-
-    mapper.set_array(data['count'])
-    cbar=plt.colorbar(mapper)
-    cbar.ax.set_title('Active Cases',color='white')
-    plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map.png',bbox_inches='tight')
+mapper.set_array(data['deaths'])
+cbar=plt.colorbar(mapper)
+cbar.ax.set_title('Deaths',color='white')
+plt.rcParams['savefig.facecolor']='#343a40'
+plt.savefig('static\\map2.png',bbox_inches='tight')
 
 
 
-    active=sum(a[2])
-    cured=sum(a[3])
-    dead=sum(a[4])
 
-    a.append(active)
-    a.append(cured)
-    a.append(dead)
+fig, ax = plt.subplots(figsize=(10, 9))
+plt.style.use("dark_background")
+
+ax.axis('off')
+
+merged.plot(column='count', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8')
+mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['count'].max()), cmap='Blues')
+
+mapper.set_array(data['count'])
+cbar=plt.colorbar(mapper)
+cbar.ax.set_title('Active Cases',color='white')
+plt.rcParams['savefig.facecolor']='#343a40'
+plt.savefig('static\\map.png',bbox_inches='tight')
+
+
+
+active=sum(a[2])
+cured=sum(a[3])
+dead=sum(a[4])
+
+a.append(active)
+a.append(cured)
+a.append(dead)
 
 app = Flask(__name__)
 
 @app.route('/')
 def data():
-    run()
+
     return render_template('index.html',data=a)
 
 if __name__ == '__main__':
