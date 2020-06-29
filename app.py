@@ -58,7 +58,7 @@ def run():
     data.loc[0,'area']='Andaman & Nicobar Island'
     data.loc[8,'area']='NCT of Delhi'
 
-    fp = "static\\Igismap\\Indian_States.shp"
+    fp = "static/Igismap/Indian_States.shp"
     map_df = gpd.read_file(fp)
     merged = map_df.set_index('st_nm').join(data.set_index('area'))
     merged.head()
@@ -76,7 +76,7 @@ def run():
     cbar=plt.colorbar(mapper)
     cbar.ax.set_title('Cured/Discharged/Migrated',color='white')
     plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map1.png',bbox_inches='tight')
+    plt.savefig('static/map1.png',bbox_inches='tight')
 
 
 
@@ -93,7 +93,7 @@ def run():
     cbar=plt.colorbar(mapper)
     cbar.ax.set_title('Deaths',color='white')
     plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map2.png',bbox_inches='tight')
+    plt.savefig('static/map2.png',bbox_inches='tight')
 
 
 
@@ -110,7 +110,7 @@ def run():
     cbar=plt.colorbar(mapper)
     cbar.ax.set_title('Active Cases',color='white')
     plt.rcParams['savefig.facecolor']='#343a40'
-    plt.savefig('static\\map.png',bbox_inches='tight')
+    plt.savefig('static/map.png',bbox_inches='tight')
 
 
 
