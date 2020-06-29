@@ -58,7 +58,7 @@ def run():
     data.loc[0,'area']='Andaman & Nicobar Island'
     data.loc[8,'area']='NCT of Delhi'
 
-    fp = "Igismap\\Indian_States.shp"
+    fp = "static\\Igismap\\Indian_States.shp"
     map_df = gpd.read_file(fp)
     merged = map_df.set_index('st_nm').join(data.set_index('area'))
     merged.head()
