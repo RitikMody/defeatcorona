@@ -1,17 +1,11 @@
-
+import geopandas as gpd
 from flask import Flask, render_template
 import bs4 as bs
 import urllib.request
-from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Polygon
-from matplotlib.collections import PatchCollection
 from matplotlib.colors import Normalize
 import matplotlib.cm
-import pandas as pd
-import bs4 as bs
-import urllib.request
 import pandas as pd
 def scrape(url):
     list=[[],[],[],[],[]]
@@ -36,8 +30,6 @@ def scrape(url):
                 list[p].append(l[p])
     return list
 
-a=scrape('https://www.mohfw.gov.in/')
-
 def convert(x):
     if(x[-1]=='#'):
         return int(x[:-1])
@@ -47,152 +39,93 @@ def convert1(x):
         return x[:-1]
     return x
 
-data=map(convert1,a[1])
-a[1]=list(data)
-data1=map(convert,a[2])
+a=[]
+def run():
+    global a
+    a=scrape('https://www.mohfw.gov.in/')
 
-a[2]=list(data1)
-data=map(convert,a[3])
-a[3]=list(data)
-data=map(convert,a[4])
-a[4]=list(data)
-data=pd.DataFrame({'area':a[1],'count':a[2],'cured':a[3],'deaths':a[4]})
-data.loc[0,'area']='Andaman & Nicobar Island'
-data.loc[8,'area']='NCT of Delhi'
+    data=map(convert1,a[1])
+    a[1]=list(data)
+    data1=map(convert,a[2])
 
+    a[2]=list(data1)
+    data=map(convert,a[3])
+    a[3]=list(data)
+    data=map(convert,a[4])
+    a[4]=list(data)
+    data=pd.DataFrame({'area':a[1],'count':a[2],'cured':a[3],'deaths':a[4]})
+    data.loc[0,'area']='Andaman & Nicobar Island'
+    data.loc[8,'area']='NCT of Delhi'
 
+    fp = "Igismap\\Indian_States.shp"
+    map_df = gpd.read_file(fp)
+    merged = map_df.set_index('st_nm').join(data.set_index('area'))
+    merged.head()
+    merged.fillna(0,inplace=True)
 
+    fig, ax = plt.subplots(figsize=(10,9))
+    plt.style.use("dark_background")
 
-fig, ax = plt.subplots(figsize=(10,20))
-map=Basemap(
-    llcrnrlon=67,
-    llcrnrlat=6,
-    urcrnrlon=98,
-    urcrnrlat=38,
-    lat_0=27,
-    lon_0=76)
-i=map.readshapefile("Igismap\\Indian_States","states",color='#444444',linewidth=2)
+    ax.axis('off')
 
-df_poly = pd.DataFrame({
-        'shapes': [Polygon(np.array(shape), True) for shape in map.states],
-        'area': [area['st_nm'] for area in map.states_info]
-    })
-df_poly = df_poly.merge(data, on='area', how='left')
-cmap = plt.get_cmap('Greens')
-pc = PatchCollection(df_poly.shapes, zorder=2)
-norm = Normalize()
+    merged.plot(column='cured', cmap='Greens', linewidth=0.8, ax=ax, edgecolor='0.8')
+    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['cured'].max()), cmap='Greens')
 
-pc.set_facecolor(cmap(norm(df_poly['cured'].fillna(0).values)))
-ax.add_collection(pc)
-
-mapper = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
-
-mapper.set_array(df_poly['cured'])
-cbar=plt.colorbar(mapper, shrink=0.4)
-cbar.ax.set_title('Cured/Discharged/Migrated',color='white')
-# plt.legend('')
-# ax.set_xlabel('Country Population', size = 8)
-ax.axis('off')
-plt.rcParams['savefig.facecolor']='#343a40'
-plt.rcParams["ytick.color"] = 'white'
-plt.rcParams["xtick.color"] = 'white'
-plt.savefig('static\\map1.png',bbox_inches='tight')
+    mapper.set_array(data['cured'])
+    cbar=plt.colorbar(mapper)
+    cbar.ax.set_title('Cured/Discharged/Migrated',color='white')
+    plt.rcParams['savefig.facecolor']='#343a40'
+    plt.savefig('static\\map1.png',bbox_inches='tight')
 
 
 
 
-fig, ax = plt.subplots(figsize=(10,20))
-map=Basemap(
-    llcrnrlon=67,
-    llcrnrlat=6,
-    urcrnrlon=98,
-    urcrnrlat=38,
-    lat_0=27,
-    lon_0=76)
-i=map.readshapefile("Igismap\\Indian_States","states",color='#444444',linewidth=2)
+    fig, ax = plt.subplots(figsize=(10,9))
+    plt.style.use("dark_background")
 
-df_poly = pd.DataFrame({
-        'shapes': [Polygon(np.array(shape), True) for shape in map.states],
-        'area': [area['st_nm'] for area in map.states_info]
-    })
-df_poly = df_poly.merge(data, on='area', how='left')
-cmap = plt.get_cmap('YlOrRd')
-pc = PatchCollection(df_poly.shapes, zorder=2)
-norm = Normalize()
+    ax.axis('off')
 
-pc.set_facecolor(cmap(norm(df_poly['deaths'].fillna(0).values)))
-ax.add_collection(pc)
+    merged.plot(column='deaths', cmap='YlOrRd', linewidth=0.8, ax=ax, edgecolor='0.8')
+    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['deaths'].max()), cmap='YlOrRd')
 
-mapper = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
-
-mapper.set_array(df_poly['deaths'])
-cbar=plt.colorbar(mapper, shrink=0.4)
-plt.rcParams["ytick.color"] = 'white'
-plt.rcParams["xtick.color"] = 'white'
-cbar.ax.set_title('Deaths',color='white')
-# plt.legend('')
-# ax.set_xlabel('Country Population', size = 8)
-ax.axis('off')
-plt.rcParams['savefig.facecolor']='#343a40'
-plt.rcParams["ytick.color"] = 'white'
-plt.rcParams["xtick.color"] = 'white'
-plt.savefig('static\\map2.png',bbox_inches='tight')
-
-
-
-fig, ax = plt.subplots(figsize=(10,20))
-map=Basemap(
-    llcrnrlon=67,
-    llcrnrlat=6,
-    urcrnrlon=98,
-    urcrnrlat=38,
-    lat_0=27,
-    lon_0=76)
-i=map.readshapefile("Igismap\\Indian_States","states",color='#444444',linewidth=2)
-
-df_poly = pd.DataFrame({
-        'shapes': [Polygon(np.array(shape), True) for shape in map.states],
-        'area': [area['st_nm'] for area in map.states_info]
-    })
-df_poly = df_poly.merge(data, on='area', how='left')
-cmap = plt.get_cmap('Blues')
-pc = PatchCollection(df_poly.shapes, zorder=2)
-norm = Normalize()
-
-pc.set_facecolor(cmap(norm(df_poly['count'].fillna(0).values)))
-ax.add_collection(pc)
-
-mapper = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
-
-mapper.set_array(df_poly['count'])
-cbar=plt.colorbar(mapper, shrink=0.4)
-plt.rcParams["ytick.color"] = 'white'
-plt.rcParams["xtick.color"] = 'white'
-cbar.ax.set_title('Active Cases ',color='white')
-# plt.legend('')
-# ax.set_xlabel('Country Population', size = 8)
-ax.axis('off')
-plt.rcParams['savefig.facecolor']='#343a40'
-
-plt.savefig('static\\map.png',bbox_inches='tight')
+    mapper.set_array(data['deaths'])
+    cbar=plt.colorbar(mapper)
+    cbar.ax.set_title('Deaths',color='white')
+    plt.rcParams['savefig.facecolor']='#343a40'
+    plt.savefig('static\\map2.png',bbox_inches='tight')
 
 
 
 
+    fig, ax = plt.subplots(figsize=(10, 9))
+    plt.style.use("dark_background")
 
-active=sum(a[2])
-cured=sum(a[3])
-dead=sum(a[4])
+    ax.axis('off')
 
-a.append(active)
-a.append(cured)
-a.append(dead)
+    merged.plot(column='count', cmap='Blues', linewidth=0.8, ax=ax, edgecolor='0.8')
+    mapper = matplotlib.cm.ScalarMappable(norm=plt.Normalize(vmin=0, vmax=data['count'].max()), cmap='Blues')
+
+    mapper.set_array(data['count'])
+    cbar=plt.colorbar(mapper)
+    cbar.ax.set_title('Active Cases',color='white')
+    plt.rcParams['savefig.facecolor']='#343a40'
+    plt.savefig('static\\map.png',bbox_inches='tight')
+
+
+
+    active=sum(a[2])
+    cured=sum(a[3])
+    dead=sum(a[4])
+
+    a.append(active)
+    a.append(cured)
+    a.append(dead)
 
 app = Flask(__name__)
 
 @app.route('/')
 def data():
-
+    run()
     return render_template('index.html',data=a)
 
 if __name__ == '__main__':
