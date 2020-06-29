@@ -19,4 +19,4 @@ soupsieve==2.0
 Werkzeug==1.0.1
 geopandas
 lxml
-Fiona==1.6.0
+Fiona==1.8.3
