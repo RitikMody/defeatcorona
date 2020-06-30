@@ -7,7 +7,7 @@ It is a simple dashboard created to visualize the **Corona** cases in India.
 Go visit it at https://defeatcorona.herokuapp.com/
 
 ## Maps
-[![](https://img.shields.io/badge/Made_with-basemap-yellow?style=for-the-badge)](https://matplotlib.org/basemap/)
+[![](https://img.shields.io/badge/Made_with-geopandas-yellow?style=for-the-badge&logo=geopandas)](https://geopandas.org/)
 
 There are 3 types of maps shown in this dashboard :
 
