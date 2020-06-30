@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/Made_with-Flask-green?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/1.1.x/)
 [![](https://img.shields.io/badge/IDE-Visual_Studio_Code-blue?style=for-the-badge&logo=visual-studio-code)](https://code.visualstudio.com/  "Visual Studio Code")
 
-It is a simple dashboard created to visualize the novel **Corona** cases in India.
+It is a simple dashboard created to visualize the **Corona** cases in India.
 Go visit it at https://defeatcorona.herokuapp.com/
 
 ## Maps
