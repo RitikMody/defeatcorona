@@ -3,6 +3,7 @@
 [![](https://img.shields.io/badge/IDE-Visual_Studio_Code-blue?style=for-the-badge&logo=visual-studio-code)](https://code.visualstudio.com/  "Visual Studio Code")
 
 It is a simple dashboard created to visualize the novel **Corona** cases in India.
+Go visit it at https://defeatcorona.herokuapp.com/
 
 ## Maps
 [![](https://img.shields.io/badge/Made_with-basemap-yellow?style=for-the-badge)](https://matplotlib.org/basemap/)
