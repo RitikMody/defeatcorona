@@ -57,6 +57,7 @@ background-color: #343a40;
 /* Table Section */
 #data{
   background-color: #343a40;
+  color: #c3c3c3;
   padding: 5% 0;
 }
 .data-set{
@@ -64,11 +65,15 @@ background-color: #343a40;
 
 }
 table{
-  /* background-color: #343a40; */
+  background-color: #343a40;
   color: #c3c3c3;
 }
 tr{
   color: #c3c3c3;
+}
+
+tr:hover{
+  color: #0779e4;
 }
 
 /* Graph Section */
@@ -87,10 +92,6 @@ canvas{
 .btn:hover{
   background-color: #c3c3c3;
   color: #343a40;
-}
-tr:hover{
-  background-color: #fff;
-  color: #fff;
 }
 
 p{
