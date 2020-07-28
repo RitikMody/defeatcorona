@@ -127,7 +127,8 @@ app = Flask(__name__)
 @app.route('/')
 def data():
     # run()
-    return render_template('maintenance.html',data=a)
+    # return render_template('maintenance.html',data=a)
+    return render_template('maintenance.html')
 
 if __name__ == '__main__':
    app.run(debug = True)
